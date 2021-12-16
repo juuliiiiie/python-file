@@ -1,0 +1,85 @@
+def emparejamiento():
+    j1 = ""
+    j2 = ""
+    listaEmp = []
+    lista = []
+    rangos = ["Hierro","Bronce","Plata","Oro","Platino","Diamante","Maestro","Gran Maestro","Retador"]
+    for i in range(len(rangos)):
+        lista = selectL(i)
+        for e in range(len(lista)):
+            rand = random.randint(0,len(lista))
+            j1 = lista[rand]
+            rand = random.randint(0,len(lista))
+            j2 = lista[rand]
+            if (j1 != j2):
+                for y in range(len(listaEmp)):
+                    p1 = str(listaEmp[y]).split("|")[0]
+                    p2 = str(listaEmp[y]).split("|")[1]
+                    if (p1 == j1 and p2 == j2 or p2 == j1 and p1 == j2):
+                        break
+                lista.append(str(j1+"|"+j2))
+                break
+
+
+def printEmparejamiento(lista):
+    for i in range(len(lista)):
+        j1 = str(lista[i]).split("|")[0]
+        j2 = str(lista[i]).split("|")[1]
+        print("El emparejamiento numero #"+str(i)+": "+j1+" VS "+j2)
+
+
+def menu():
+    global jugadores,jugadoresOrd,lM,lB,lH,lGM,lR,lP,lPl,lD,lO  
+    registrarJugadores()
+    initlist()
+    op = 0
+    print("1.Generar lista de emparejamiento\n2.Ordenar jugadores en la lista\n3.Mostrar lista inicial\n4.Mostrar las listas de cada division\n5.El jugador con mayor division y puntuacion\n6.El jugador con menor division y puntuacion\n7.El promedio de todas las divisiones\n8.el promedio de una division\n9.El promedio de puntuacion de todas las diviciones\n10.Cantidad de jugadores por divicion\n11.Cantidad de jugadores totales\n12.Salir")
+    op = int(input("Digite la opcion que desea realizar: "))
+    if(op == 1):
+        printEmparejamiento(emparejamiento())
+        menu()
+    elif(op == 2):
+        ordBurbuja(jugadores)
+        imprimirLista(jugadoresOrd)
+        menu()
+    elif(op == 3):
+        imprimirLista(jugadores)
+        menu()
+    elif(op == 4):
+        imprimirLista(lH)
+        imprimirLista(lB)
+        imprimirLista(lP)
+        imprimirLista(lO)
+        imprimirLista(lPl)
+        imprimirLista(lD)
+        imprimirLista(lM)
+        imprimirLista(lGM)
+        imprimirLista(lR)
+        menu()
+    elif(op == 5):
+        mayorDP(jugadores)
+        menu()
+    elif(op == 6):
+        menorDP(jugadores)
+        menu()
+    elif(op == 7):
+        imprimirPromT(promDivT)
+        menu()
+    elif(op == 8):
+        print("1.Hierro\n2.Bronce\n3.Plata\n4.Oro\n5.Platino\n6.Diamante\n7.Maestro\n8.Gran Maestro\n9.Retador")
+        op = int(input("Digite la division que desea saber el promedio: "))
+        print("El promedio de la division es de: ",promDiv(op))
+        menu()
+    elif(op == 9):
+        imprimirPromT(promDivT)
+        menu()
+    elif(op == 10):
+        cantJDiv()
+        menu()
+    elif(op == 11):
+        print("La cantidad total de jugadores es de:",cantTJ())
+        menu()
+    elif(op == 12):
+        print("Gracias")
+        
+menu()
